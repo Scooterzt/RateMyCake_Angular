@@ -1,0 +1,72 @@
+<div class="wall">
+  <h2>Rate my cakes</h2>
+  <div class="form">
+      <form (submit)="addNewCake()">
+        <label for="">Add new Cake: </label><br>
+        <div class="error" *ngIf="bakerName.dirty">
+            <div *ngIf="!bakerName.valid">          
+              <span style="color: red">mimimal length is 2!</span>
+            </div>
+        </div>
+        <input type="text" 
+          name="bakerName"
+          required
+          minlength="2" 
+          [(ngModel)]="newCake.bakerName" 
+          placeholder="Baker Name..." 
+          #bakerName="ngModel"><br>
+        <div class="error" *ngIf="imageURL.dirty">
+          <div *ngIf="!imageURL.valid">
+            <span style="color: red">You need to include image URL here</span>
+          </div>
+        </div>
+        <input type="text" 
+          name="imageURL" 
+          required
+          [(ngModel)]="newCake.imageURL" 
+          placeholder="Image Url..."
+          #imageURL="ngModel"><br>
+        <input *ngIf="bakerName.valid && imageURL.valid" type="submit" value="Add new Cake">
+      </form>
+  </div>
+  <div class="main" *ngIf="allCakes">
+    <div *ngFor="let cake of allCakes">
+        <p> By: {{ cake.bakerName }}</p>
+        <img src="{{cake.imageURL}}" (click)="cakeToshow(cake._id)" alt="cake" height="150">
+        <form id="cake._id" (submit)="rateOneCake(cake._id)">
+          <select name="rateCake.rating" [(ngModel)]="rateCake.rating">
+            <option value="5">5 star</option>
+            <option value="4">4 star</option>
+            <option value="3">3 star</option>
+            <option value="2">2 star</option>
+            <option value="1">1 star</option>
+          </select><br>
+          <textarea name="rateCake.comment" cols="26" rows="2" [(ngModel)]="rateCake.comment" placeholder="comment..."></textarea><br>
+          <input type="submit" value="add rating">
+          <hr>
+        </form>
+    </div>
+  </div>
+  <div class="blue">
+    <app-cake *ngIf="selectedCake" [cakeToShow]="selectedCake">
+
+    </app-cake>    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
